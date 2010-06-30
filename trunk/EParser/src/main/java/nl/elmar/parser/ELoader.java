@@ -13,6 +13,8 @@ import nl.elmar.model.Accommodation;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
 
+enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo}
+
 public class ELoader {
 
     List<String> accommodationIds = new ArrayList<String>();
@@ -21,12 +23,7 @@ public class ELoader {
     Unit unit = null;
     Price price = null; 
 
-    final static List<String> validTags = new ArrayList<String>();
-    static{
-        validTags.add("AccommodationID");
-        validTags.add("SupplyPriceAvailabilityInfo");
-        validTags.add("UnitInfo");
-    }
+    
     
     boolean loadAccommodation =false;
     
@@ -39,53 +36,56 @@ public class ELoader {
         for (int event = xmlr.next(); event != XMLStreamConstants.END_DOCUMENT; event = xmlr.next()) {
             if (event == XMLStreamConstants.START_ELEMENT) {
 
-                String element = xmlr.getLocalName();
-                if (validTags.contains(element)) {
-                    if ("AccommodationID".equals(element)) {
-                        //skip this accommodation if already loaded
-                        String accommodationId = xmlr.getElementText();
-                        if(!accommodationIds.contains(accommodationId)){
-                            loadAccommodation = true;
-                        }
-                        baccommodation = true;
-                        persistPrevious(accommodation);
-                        if(accommodation != null) break; //TODO: to remove!!!
-                        accommodation = new Accommodation(accommodationId);
-                    }
-                    if ("UnitInfo".equals(element)) {
-                        bunit = true;
-                        baccommodation = false;
-                        unit = new Unit();
-                    }
-                    if ("SupplyPriceAvailabilityInfo".equals(element)) {
-                        bprice = true;
-                        price = new Price();
-                    }
-                }
+               String element = xmlr.getLocalName();
+               try{
+	               switch (Tag.valueOf(element)) {
+	                	case AccommodationID:
+	                        //skip this accommodation if already loaded TODO: Remove or complete syncronized block
+	                        String accommodationId = xmlr.getElementText();
+	                        if(!accommodationIds.contains(accommodationId)){
+	                            loadAccommodation = true;
+	                        }
+	                        baccommodation = true;
+	                        persistPrevious(accommodation);
+	                        accommodation = new Accommodation(accommodationId);
+	                        break;
+		                case UnitInfo:
+	                        bunit = true;
+	                        baccommodation = false;
+	                        unit = new Unit();
+	                        break;
+		                case SupplyPriceAvailabilityInfo:
+	                        bprice = true;
+	                        price = new Price();
+	                        break;
+	                }
+               }catch(IllegalArgumentException iae){ /*not relevant tag*/ }
+               
+	                if (baccommodation) {
+	                    loadAccommodation(xmlr, accommodation);
+	                }
+	                if (bunit) {
+	                    loadUnits(xmlr, accommodation, unit, mapUnits);
+	                }
+	                if (bprice) {
+	                    loadPrices(xmlr, mapUnits, price);
+	                }
+               }   
 
-                if (baccommodation) {
-                    loadAccommodation(xmlr, accommodation);
-                }
-                if (bunit) {
-                    loadUnits(xmlr, accommodation, unit, mapUnits);
-                }
-                if (bprice) {
-                    loadPrices(xmlr, mapUnits, price);
-                }
-            }   
-                
-            if (event == XMLStreamConstants.END_ELEMENT) {
-
-                String element = xmlr.getLocalName();
-                if (validTags.contains(element)) {
-                    if ("UnitInfo".equals(element)) {
-                        bunit = false;
-                    }
-                    if ("SupplyPriceAvailabilityInfo".equals(element)) {
-                        bprice = false;
-                    }
-                }
-            }
+	           if (event == XMLStreamConstants.END_ELEMENT) {
+	
+	                String element = xmlr.getLocalName();
+	                try{
+		                switch (Tag.valueOf(element)) {
+		                	case UnitInfo:
+		                        bunit = false;
+		                        break;
+		                	case SupplyPriceAvailabilityInfo:
+		                        bprice = false;
+		                        break;
+		                }
+	                }catch(IllegalArgumentException iae){ /*not relevant tag*/ }
+	           }
         
         }   
         
@@ -94,7 +94,7 @@ public class ELoader {
     
     
     
-    private static void loadAccommodation(XMLStreamReader xmlr, Accommodation accomodation) throws XMLStreamException {
+	private static void loadAccommodation(XMLStreamReader xmlr, Accommodation accomodation) throws XMLStreamException {
         if (xmlr.getLocalName().equalsIgnoreCase("Name")) {
             accomodation.setName(xmlr.getElementText());
         }
