@@ -18,10 +18,9 @@ public class PersistenceServiceHibernate extends JdoDaoSupport implements Persis
 
     @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName = "mainPersistance")
     public void setInternalEntityManager(final javax.persistence.EntityManager entityManager) {
-        setEntityManager(entityManager);
+      //  setEntityManager(entityManager);
     }
     
-    @Override
     public Accommodation save(Accommodation accommodation) {
         if (accommodation == null) {
             throw new EParserException("accommodation is null");
@@ -29,7 +28,7 @@ public class PersistenceServiceHibernate extends JdoDaoSupport implements Persis
 
         try {
             
-                getJpaTemplate().getEntityManager().persist(accommodation);
+              //  getJpaTemplate().getEntityManager().persist(accommodation);
             
             return accommodation;
         } catch (org.springframework.dao.OptimisticLockingFailureException e) {
