@@ -12,19 +12,20 @@ import javax.xml.stream.XMLStreamReader;
 import nl.elmar.model.Accommodation;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
+import nl.elmar.persistence.EPersist;
 
 enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo}
 
 public class ELoader {
 
+    EPersist ePersist = new EPersist(); 
+    
     List<String> accommodationIds = new ArrayList<String>();
     Map<String, Unit> mapUnits = new LinkedHashMap<String, Unit>();
     Accommodation accommodation = null;
     Unit unit = null;
     Price price = null; 
 
-    
-    
     boolean loadAccommodation =false;
     
     boolean baccommodation = false;
@@ -40,35 +41,35 @@ public class ELoader {
                try{
 	               switch (Tag.valueOf(element)) {
 	                	case AccommodationID:
-	                        //skip this accommodation if already loaded TODO: Remove or complete syncronized block
 	                        String accommodationId = xmlr.getElementText();
+	                        //skip this accommodation if already loaded TODO: Remove or complete syncronized block
 	                        if(!accommodationIds.contains(accommodationId)){
 	                            loadAccommodation = true;
 	                        }
 	                        baccommodation = true;
 	                        persistPrevious(accommodation);
-	                        accommodation = new Accommodation(accommodationId);
+	                        resetAccommodation(accommodationId);
 	                        break;
 		                case UnitInfo:
 	                        bunit = true;
 	                        baccommodation = false;
 	                        unit = new Unit();
+	                        unit.setPrices(new ArrayList<Price>());
 	                        break;
 		                case SupplyPriceAvailabilityInfo:
 	                        bprice = true;
-	                        price = new Price();
 	                        break;
 	                }
-               }catch(IllegalArgumentException iae){ /*not relevant tag*/ }
+               }catch(IllegalArgumentException iae){ /*not relevant tag FIXME:This exception is thrown also from persistence. */  }
                
 	                if (baccommodation) {
 	                    loadAccommodation(xmlr, accommodation);
 	                }
 	                if (bunit) {
-	                    loadUnits(xmlr, accommodation, unit, mapUnits);
+	                   loadUnits(xmlr, accommodation, unit, mapUnits);
 	                }
 	                if (bprice) {
-	                    loadPrices(xmlr, mapUnits, price);
+	                    loadPrices(xmlr, mapUnits);
 	                }
                }   
 
@@ -87,20 +88,31 @@ public class ELoader {
 	                }catch(IllegalArgumentException iae){ /*not relevant tag*/ }
 	           }
         
-        }   
+        }//END FOR   
         
+        persistPrevious(accommodation);
     }
     
     
     
-    
-	private static void loadAccommodation(XMLStreamReader xmlr, Accommodation accomodation) throws XMLStreamException {
+    /**
+     * For each new accomodationId we reset the field
+     * <code>accommodation</code>
+     * @param accommodationId
+     */
+	private void resetAccommodation(String accommodationId) {
+        accommodation = new Accommodation(accommodationId);
+        accommodation.setUnits(new ArrayList<Unit>());
+        accommodationIds.add(accommodationId);
+    }
+
+    private void loadAccommodation(XMLStreamReader xmlr, Accommodation accomodation) throws XMLStreamException {
         if (xmlr.getLocalName().equalsIgnoreCase("Name")) {
             accomodation.setName(xmlr.getElementText());
         }
     }
 
-    private static void loadUnits(XMLStreamReader xmlr, Accommodation accomodation, Unit unit, Map<String, Unit> mapUnits) throws XMLStreamException {
+    private void loadUnits(XMLStreamReader xmlr, Accommodation accomodation, Unit unit, Map<String, Unit> mapUnits) throws XMLStreamException {
 
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
             String unitId = xmlr.getElementText();
@@ -113,9 +125,10 @@ public class ELoader {
         }
     }
 
-    private static void loadPrices(XMLStreamReader xmlr, Map<String, Unit> mapUnits, Price price) throws XMLStreamException {
+    private void loadPrices(XMLStreamReader xmlr, Map<String, Unit> mapUnits) throws XMLStreamException {
 
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
+            price = new Price();
             Unit unit = mapUnits.get(xmlr.getElementText());
             unit.getPrices().add(price);
         }
@@ -127,9 +140,10 @@ public class ELoader {
         }
     }
     
-    private static void persistPrevious(Accommodation accommodation) {
-        // TODO Auto-generated method stub
-        
+    private void persistPrevious(Accommodation accommodation) {
+        if(accommodationIds.size() > 0){
+            ePersist.save(accommodation);
+        }
     }
 
 }

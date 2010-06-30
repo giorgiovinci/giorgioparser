@@ -1,39 +1,30 @@
 package nl.elmar.parser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import nl.elmar.model.Accommodation;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
+import nl.elmar.persistence.EPersist;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-//@ContextConfiguration(locations = "classpath:application-context.xml")
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional
 public class TestEPersistence {
 
+    EPersist ePersist = new EPersist();
+    
+    
 	@Test
 	public void testAccommodationPersistence(){
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("accomodationPersistance");
-	    EntityManager em = emf.createEntityManager();
+	
 	    
 	    Price price = new Price();
 	    price.setAmount("100");
 	    List<Price> listPrice = new ArrayList<Price>();
-	    
+	    listPrice.add(price);
 	    
 	    Unit unit = new Unit();
 	    unit.setId("1");
@@ -43,35 +34,28 @@ public class TestEPersistence {
 	    
 	    unit.setPrices(listPrice);
 	    
-	    em.getTransaction().begin();
-
 	    Accommodation acc = new Accommodation();
 	    acc.setId("1");
 	    acc.setName("test");
 	    acc.setUnits(listUnit);
+	    ePersist.save(acc); 
 	    
-	    em.persist(acc);
-	    em.getTransaction().commit();
-
-	    Query query = em.createQuery("select a from Accommodation a");
-	    List<Accommodation> accList = query.getResultList();
-	    for(Accommodation a: accList){
-	    	System.out.println(a.getId());
-	    }
+	    List<Accommodation> accommodations = ePersist.getAll();
+	    //AccommodPERSIST, CascadeType.MERGEation check
+	    Accommodation a = accommodations.get(0);
+    	assertEquals("1", a.getId());
+    	assertEquals("test", a.getName());
+    	
+    	//Unit check
+	    Unit u = a.getUnits().get(0);
+	    assertEquals("1", u.getId());
+	    assertEquals("desc", u.getDescription());
+	    
+	    //Price check
+	    Price p = unit.getPrices().get(0);
+        assertEquals("100", p.getAmount());
+        
 	    
 	}
     
-	@Test
-	public void testAccommodationRead(){
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("accomodationPersistance");
-	    EntityManager em = emf.createEntityManager();
-	    
-	    Query query = em.createQuery("select a from Accommodation a");
-	    List<Accommodation> accList = query.getResultList();
-	    System.out.println(accList);
-	    
-	    Query nquery = em.createNativeQuery("select id from Accommodation");
-	    List<String> ids = nquery.getResultList();
-	    System.out.println(ids);
-	}
 }
