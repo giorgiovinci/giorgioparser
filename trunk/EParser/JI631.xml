@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<TravelMessage VersionID="1.8">
+  <Control Language="NL" Test="nee">
+    <SenderSessionID/>
+    <ReceiverSessionID/>
+    <Date>2009-05-11</Date>
+    <Time>18:05</Time>
+    <MessageSequence>630</MessageSequence>
+    <PreviousMessageSequence>629</PreviousMessageSequence>
+    <SenderID>JI</SenderID>
+    <ReceiverID/>
+    <RequestID>SupplyRequest</RequestID>
+    <ResponseID>SupplyResponse</ResponseID>
+  </Control>
+  <TResponse>
+    <SupplyResponse>
+      <SupplyPackage>
+        <MutationType>Deletion</MutationType>
+        <OfferType>Regulier</OfferType>
+        <PackageID>ABADE01</PackageID>
+        <PackageInfo>
+          <Description>Adelboden/Beau-site</Description>
+          <Category>Auto/vlieg Europa</Category>
+        </PackageInfo>
+        <SupplyAccoInfo>
+          <AccommodationID>ACADEBEA</AccommodationID>
+          <Name>Beau-Site</Name>
+          <Location>
+            <Country>Zwitserland</Country>
+            <Place>Adelboden</Place>
+          </Location>
+          <UnitInfo>
+            <UnitID>1PK  BDWC</UnitID>
+            <UnitType>1PK</UnitType>
+            <Description>1-Persoonskamer</Description>
+            <MinOccupancy>1</MinOccupancy>
+            <MaxOccupancy>1</MaxOccupancy>
+            <FacilityInfo>
+              <FacilityType>BD</FacilityType>
+              <Description>Bad of douche</Description>
+            </FacilityInfo>
+            <FacilityInfo>
+              <FacilityType>WC</FacilityType>
+              <Description>Toilet</Description>Description
+            </FacilityInfo>
+            <BoardInfo>
+              <BoardType>HP</BoardType>
+              <Description>Halfpension</Description>
+            </BoardInfo>
+          </UnitInfo>
+          <UnitInfo>
+            <UnitID>2PK2 BDWC</UnitID>
+            <UnitType>2PK</UnitType>
+            <UnitDif>2PK2 </UnitDif>
+            <Description>2-Persoonskamer</Description>
+            <MinOccupancy>2</MinOccupancy>
+            <MaxOccupancy>2</MaxOccupancy>
+            <FacilityInfo>
+              <FacilityType>BD</FacilityType>
+              <Description>Bad of douche</Description>
+            </FacilityInfo>
+            <FacilityInfo>
+              <FacilityType>WC</FacilityType>
+              <Description>Toilet</Description>
+            </FacilityInfo>
+            <BoardInfo>
+              <BoardType>HP</BoardType>
+              <Description>Halfpension</Description>
+            </BoardInfo>
+          </UnitInfo>
+          <UnitInfo>
+            <UnitID>2PK3 BDWCBL</UnitID>
+            <UnitType>2PK</UnitType>
+            <UnitDif>2PK3 </UnitDif>
+            <Description>Comfort</Description>
+            <MinOccupancy>2</MinOccupancy>
+            <MaxOccupancy>3</MaxOccupancy>
+            <BoardInfo>
+              <BoardType>HP</BoardType>
+              <Description>Halfpension</Description>
+            </BoardInfo>
+          </UnitInfo>
+        </SupplyAccoInfo>
+        <SupplyPriceAvailabilityInfo>
+          <DepartureDate>2009-06-15</DepartureDate>
+          <Duration DurationType="DAGEN">008</Duration>
+          <SupplyPriceAvailability>
+            <UnitID>1PK  BDWC</UnitID>
+            <UnitPrice>
+              <BoardType>HP</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="1">480,00</Price>
+              <Status>op aanvraag</Status>
+            </UnitPrice>
+            <UnitID>2PK2 BDWC</UnitID>
+            <UnitPrice>
+              <BoardType>HP</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">394,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitID>2PK3 BDWCBL</UnitID>
+            <UnitPrice>
+              <BoardType>HP</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">422,00</Price>
+              <Status>op aanvraag</Status>
+            </UnitPrice>
+            <UnitPrice>
+              <BoardType>HP</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="3">350,00</Price>
+              <Status>op aanvraag</Status>
+            </UnitPrice>
+          </SupplyPriceAvailability>
+        </SupplyPriceAvailabilityInfo>
+      </SupplyPackage>
+      <SupplyPackage>
+        <MutationType>Deletion</MutationType>
+        <OfferType>Regulier</OfferType>
+        <PackageID>ABASC01</PackageID>
+        <PackageInfo>
+          <Description>Altenberg/schellerhau/Stephanshohe</Description>
+          <Category>Auto/vlieg Europa</Category>
+        </PackageInfo>
+        <SupplyAccoInfo>
+          <AccommodationID>ACALTSTP</AccommodationID>
+          <Name>Stephanshöhe</Name>
+          <Location>
+            <Country>Duitsland</Country>
+            <Place>Altenberg-Schellerhau</Place>
+          </Location>
+          <UnitInfo>
+            <UnitID>2PK  DOWC</UnitID>
+            <UnitType>2PK</UnitType>
+            <Description>2-Persoonskamer</Description>
+            <MinOccupancy>1</MinOccupancy>
+            <MaxOccupancy>2</MaxOccupancy>
+            <FacilityInfo>
+              <FacilityType>DO</FacilityType>
+              <Description>Douche</Description>
+            </FacilityInfo>
+            <FacilityInfo>
+              <FacilityType>WC</FacilityType>
+              <Description>Toilet</Description>
+            </FacilityInfo>
+            <BoardInfo>
+              <BoardType>LO</BoardType>
+              <Description>Logies ontbijt</Description>
+            </BoardInfo>
+          </UnitInfo>
+          <UnitInfo>
+            <UnitID>2PK3 DOWC</UnitID>
+            <UnitType>2PK</UnitType>
+            <UnitDif>2PK3 </UnitDif>
+            <Description>2-Persoonskamer</Description>
+            <MinOccupancy>2</MinOccupancy>
+            <MaxOccupancy>3</MaxOccupancy>
+            <FacilityInfo>
+              <FacilityType>DO</FacilityType>
+              <Description>Douche</Description>
+            </FacilityInfo>
+            <FacilityInfo>
+              <FacilityType>WC</FacilityType>
+              <Description>Toilet</Description>
+            </FacilityInfo>
+            <BoardInfo>
+              <BoardType>LO</BoardType>
+              <Description>Logies ontbijt</Description>
+            </BoardInfo>
+          </UnitInfo>
+        </SupplyAccoInfo>
+        <SupplyPriceAvailabilityInfo>
+          <DepartureDate>2009-06-01</DepartureDate>
+          <Duration DurationType="DAGEN">015</Duration>
+          <SupplyPriceAvailability>
+            <UnitID>2PK  DOWC</UnitID>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="1">618,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">453,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitID>2PK3 DOWC</UnitID>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">453,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="3">450,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+          </SupplyPriceAvailability>
+        </SupplyPriceAvailabilityInfo>
+        <SupplyPriceAvailabilityInfo>
+          <DepartureDate>2009-06-04</DepartureDate>
+          <Duration DurationType="DAGEN">015</Duration>
+          <SupplyPriceAvailability>
+            <UnitID>2PK  DOWC</UnitID>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="1">618,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">453,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitID>2PK3 DOWC</UnitID>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="2">453,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+            <UnitPrice>
+              <BoardType>LO</BoardType>
+              <MutationType>Deletion</MutationType>
+              <OfferType>Regulier</OfferType>
+              <Price Currency="EUR" PricePer="3">450,00</Price>
+              <Status>akkoord</Status>
+            </UnitPrice>
+          </SupplyPriceAvailability>
+        </SupplyPriceAvailabilityInfo>
+      </SupplyPackage>
+    </SupplyResponse>
+  </TResponse>
+</TravelMessage>
