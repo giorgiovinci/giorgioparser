@@ -1,0 +1,1 @@
+java -cp ./target/EParser-0.0.1-SNAPSHOT-jar-with-dependencies.jar nl.elmar.parser.EParser JI630.xml
