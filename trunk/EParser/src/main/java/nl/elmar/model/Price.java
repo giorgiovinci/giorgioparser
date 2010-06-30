@@ -11,16 +11,16 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class Price {
     @Id 
-	private String id = UUID.randomUUID().toString();
+	private String uuid = UUID.randomUUID().toString();
 	private String currency;
 	private String pricePer;
 	private String amount;
 	
-	public String getId() {
-		return id;
+	public String getUuid() {
+		return uuid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	public String getCurrency() {
 		return currency;
@@ -42,6 +42,6 @@ public class Price {
 	}
     @Override
     public String toString() {
-        return "Price Id: " + id + " amount: " + amount;
+        return "Price Id: " + uuid + " amount: " + amount;
     }
 }
