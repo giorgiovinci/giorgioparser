@@ -1,6 +1,5 @@
 package nl.elmar.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,9 +12,8 @@ public class Accommodation {
     @Id
 	private String id;
 	private String name;
-    @OneToMany(cascade =  {
-            CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Unit> units = new ArrayList<Unit>();
+    @OneToMany(cascade =  {CascadeType.ALL})
+	private List<Unit> units;
 	
 	public Accommodation() {}
 	public Accommodation(String id) {

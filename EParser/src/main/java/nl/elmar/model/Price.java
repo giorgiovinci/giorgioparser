@@ -1,16 +1,17 @@
 package nl.elmar.model;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Price {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id;
+    @Id 
+	private String id = UUID.randomUUID().toString();
 	private String currency;
 	private String pricePer;
 	private String amount;
@@ -39,5 +40,8 @@ public class Price {
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-   
+    @Override
+    public String toString() {
+        return "Price Id: " + id + " amount: " + amount;
+    }
 }
