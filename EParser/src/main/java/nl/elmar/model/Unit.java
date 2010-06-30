@@ -1,6 +1,7 @@
 package nl.elmar.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,11 +12,18 @@ import javax.persistence.OneToMany;
 public class Unit {
     
     @Id
-	private String id;
+    private String uuid = UUID.randomUUID().toString();
+    private String id;
 	private String description;
 	@OneToMany(cascade =  {CascadeType.ALL})
 	private List<Price> prices;
 	
+    public String getUuid() {
+        return uuid;
+    }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 	public String getId() {
 		return id;
 	}
