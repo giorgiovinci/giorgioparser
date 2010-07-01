@@ -34,6 +34,8 @@ public class TestELoader {
         Accommodation accommodation1 = elmarParser.accommodation;
         assertEquals("ACADEBEA",accommodation1.getId());
         assertEquals("Beau-Site",accommodation1.getName());
+        assertEquals("Zwitserland",accommodation1.getCountry());
+        assertEquals("Adelboden",accommodation1.getPlace());
 
         Unit unit11 = accommodation1.getUnits().get(0);
         assertEquals("1PK  BDWC",unit11.getId());

@@ -10,11 +10,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import nl.elmar.model.Accommodation;
+import nl.elmar.model.FacilityInfo;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
 import nl.elmar.persistence.EPersist;
 
-enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo}
+enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo, FacilityInfo, BoardInfo}
 
 public class ELoader {
 
@@ -22,15 +23,20 @@ public class ELoader {
     
     List<String> accommodationIds = new ArrayList<String>();
     Map<String, Unit> mapUnits = new LinkedHashMap<String, Unit>();
+    
     Accommodation accommodation = null;
     Unit unit = null;
     Price price = null; 
-
+    FacilityInfo facilityInfo = null;
+    
     boolean loadAccommodation =false;
     
     boolean baccommodation = false;
     boolean bunit = false;
     boolean bprice = false;
+    boolean bfacilityInfo = false;
+
+    private boolean bboardInfo;
     
     public void loadAccommodation(XMLStreamReader xmlr) throws XMLStreamException{
         
@@ -42,58 +48,56 @@ public class ELoader {
 	               switch (Tag.valueOf(element)) {
 	                	case AccommodationID:
 	                        String accommodationId = xmlr.getElementText();
-	                        //skip this accommodation if already loaded TODO: Remove or complete syncronized block
-	                        if(!accommodationIds.contains(accommodationId)){
-	                            loadAccommodation = true;
-	                        }
-	                        baccommodation = true;
 	                        persistPrevious(accommodation);
 	                        resetAccommodation(accommodationId);
+	                        baccommodation = true;
+                            //skip this accommodation if already loaded TODO: Remove or complete syncronized block
+                            if(!accommodationIds.contains(accommodationId)){
+                                loadAccommodation = true;
+                            }
 	                        break;
 		                case UnitInfo:
+		                    resetBooleans();
 	                        bunit = true;
-	                        baccommodation = false;
 	                        unit = new Unit();
 	                        unit.setPrices(new ArrayList<Price>());
 	                        break;
+		                case FacilityInfo:
+		                    resetBooleans();
+		                    bfacilityInfo = true;
+		                    facilityInfo = new FacilityInfo();
+		                    unit.setFacilityInfos(new ArrayList<FacilityInfo>());
+		                    break;
+		                case BoardInfo:
+		                    resetBooleans();
+		                    bboardInfo = true;
+		                    break;
 		                case SupplyPriceAvailabilityInfo:
+		                    resetBooleans();
 	                        bprice = true;
 	                        break;
+		                
 	                }
                }catch(IllegalArgumentException iae){ /*not relevant tag FIXME:This exception is thrown also from persistence. */  }
                
 	                if (baccommodation) {
-	                    loadAccommodation(xmlr, accommodation);
+	                    loadAccommodationDetails(xmlr);
 	                }
 	                if (bunit) {
-	                   loadUnits(xmlr, accommodation, unit, mapUnits);
+	                   loadUnits(xmlr);
 	                }
+                    if (bfacilityInfo) {
+                       loadFacilityInfo(xmlr);
+                    }
 	                if (bprice) {
-	                    loadPrices(xmlr, mapUnits);
+	                    loadPrices(xmlr);
 	                }
                }   
-
-	           if (event == XMLStreamConstants.END_ELEMENT) {
-	
-	                String element = xmlr.getLocalName();
-	                try{
-		                switch (Tag.valueOf(element)) {
-		                	case UnitInfo:
-		                        bunit = false;
-		                        break;
-		                	case SupplyPriceAvailabilityInfo:
-		                        bprice = false;
-		                        break;
-		                }
-	                }catch(IllegalArgumentException iae){ /*not relevant tag*/ }
-	           }
         
         }//END FOR   
         
         persistPrevious(accommodation);
     }
-    
-    
     
     /**
      * For each new accomodationId we reset the field
@@ -104,19 +108,35 @@ public class ELoader {
         accommodation = new Accommodation(accommodationId);
         accommodation.setUnits(new ArrayList<Unit>());
         accommodationIds.add(accommodationId);
+        
+        resetBooleans();
     }
 
-    private void loadAccommodation(XMLStreamReader xmlr, Accommodation accomodation) throws XMLStreamException {
+    private void resetBooleans() {
+        
+        baccommodation = false;
+        bunit = false;
+        bprice = false;
+        bfacilityInfo = false;
+    }	
+	
+    private void loadAccommodationDetails(XMLStreamReader xmlr) throws XMLStreamException {
         if (xmlr.getLocalName().equalsIgnoreCase("Name")) {
-            accomodation.setName(xmlr.getElementText());
+            accommodation.setName(xmlr.getElementText());
+        }
+        if (xmlr.getLocalName().equalsIgnoreCase("Country")) {
+            accommodation.setCountry(xmlr.getElementText());
+        }
+        if (xmlr.getLocalName().equalsIgnoreCase("Place")) {
+            accommodation.setPlace(xmlr.getElementText());
         }
     }
 
-    private void loadUnits(XMLStreamReader xmlr, Accommodation accomodation, Unit unit, Map<String, Unit> mapUnits) throws XMLStreamException {
+    private void loadUnits(XMLStreamReader xmlr) throws XMLStreamException {
 
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
             String unitId = xmlr.getElementText();
-            accomodation.getUnits().add(unit);
+            accommodation.getUnits().add(unit);
             mapUnits.put(unitId, unit);
             unit.setId(unitId);
         }
@@ -125,7 +145,16 @@ public class ELoader {
         }
     }
 
-    private void loadPrices(XMLStreamReader xmlr, Map<String, Unit> mapUnits) throws XMLStreamException {
+    private void loadFacilityInfo(XMLStreamReader xmlr) throws XMLStreamException{
+        if (xmlr.getLocalName().equalsIgnoreCase("Description")) {
+            facilityInfo.setDescription(xmlr.getElementText());
+        }
+        if (xmlr.getLocalName().equalsIgnoreCase("FacilityType")) {
+            facilityInfo.setType(xmlr.getElementText());
+        }
+    }
+    
+    private void loadPrices(XMLStreamReader xmlr) throws XMLStreamException {
 
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
             price = new Price();
