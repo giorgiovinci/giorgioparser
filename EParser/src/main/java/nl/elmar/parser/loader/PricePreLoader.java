@@ -15,6 +15,9 @@ public class PricePreLoader implements Loader {
     }
 
     @Override
+    /**
+     * Load the first unitId where the prices must be attached
+     */
     public void load(Map<Statuses, Object> accommodationStatus, XMLStreamReader xmlr) throws XMLStreamException {
         //Set in the status map the unit where the following prices must be attached
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
