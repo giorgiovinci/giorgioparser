@@ -15,26 +15,26 @@ import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
 import nl.elmar.persistence.EPersist;
 
-enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo, FacilityInfo, BoardInfo}
+enum Tag {AccommodationID,SupplyPriceAvailabilityInfo,UnitInfo, FacilityInfo, BoardInfo, UnitPrice}
 
 public class ELoader {
 
-    EPersist ePersist = new EPersist(); 
+    private EPersist ePersist = new EPersist(); 
     
-    List<String> accommodationIds = new ArrayList<String>();
-    Map<String, Unit> mapUnits = new LinkedHashMap<String, Unit>();
+    private List<String> accommodationIds = new ArrayList<String>();
+    private Map<String, Unit> mapUnits = new LinkedHashMap<String, Unit>();
+    private Unit unitPrice;
+    protected Accommodation accommodation;
+    private Unit unit = null;
+    private Price price = null; 
+    private FacilityInfo facilityInfo;
     
-    Accommodation accommodation = null;
-    Unit unit = null;
-    Price price = null; 
-    FacilityInfo facilityInfo = null;
+    private boolean loadAccommodation;
     
-    boolean loadAccommodation =false;
-    
-    boolean baccommodation = false;
-    boolean bunit = false;
-    boolean bprice = false;
-    boolean bfacilityInfo = false;
+    private boolean baccommodation;
+    private boolean bunit;
+    private boolean bprice;
+    private boolean bfacilityInfo;
 
     private boolean bboardInfo;
     
@@ -76,6 +76,8 @@ public class ELoader {
 		                    resetBooleans();
 	                        bprice = true;
 	                        break;
+		                case UnitPrice:
+		                    addPrice();    
 		                
 	                }
                }catch(IllegalArgumentException iae){ /*not relevant tag FIXME:This exception is thrown also from persistence. */  }
@@ -99,6 +101,11 @@ public class ELoader {
         persistPrevious(accommodation);
     }
     
+    private void addPrice() {
+        price = new Price();
+        unitPrice.getPrices().add(price);
+    }
+
     /**
      * For each new accomodationId we reset the field
      * <code>accommodation</code>
@@ -157,9 +164,7 @@ public class ELoader {
     private void loadPrices(XMLStreamReader xmlr) throws XMLStreamException {
 
         if (xmlr.getLocalName().equalsIgnoreCase("UnitID")) {
-            price = new Price();
-            Unit unit = mapUnits.get(xmlr.getElementText());
-            unit.getPrices().add(price);
+            unitPrice = mapUnits.get(xmlr.getElementText());
         }
         if (xmlr.getLocalName().equalsIgnoreCase("Price")) {
             price.setCurrency(xmlr.getAttributeValue(null, "Currency"));
