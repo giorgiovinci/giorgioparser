@@ -12,6 +12,7 @@ import javax.xml.stream.XMLStreamReader;
 import nl.elmar.model.Accommodation;
 import nl.elmar.model.Unit;
 import nl.elmar.parser.loader.AccommodationLoader;
+import nl.elmar.parser.loader.BoardInfoLoader;
 import nl.elmar.parser.loader.FacilityInfoLoader;
 import nl.elmar.parser.loader.Loader;
 import nl.elmar.parser.loader.PriceLoader;
@@ -26,7 +27,7 @@ enum Tag {
 
 
 public class ELoader {
-
+    // Maintains the status across the different loaders
     protected Map<Statuses,Object> accommodationStatus = new HashMap<Statuses, Object>();
     private Map<String,Loader> loaders = new HashMap<String, Loader>();
     private Loader loader;
@@ -39,6 +40,7 @@ public class ELoader {
         loaders.put("FacilityInfo", new FacilityInfoLoader());
         loaders.put("SupplyPriceAvailabilityInfo", new PricePreLoader());
         loaders.put("UnitPrice", new PriceLoader());
+        loaders.put("BoardInfo", new BoardInfoLoader());
         
         accommodationStatus.put(Statuses.MAP_UNIT, new LinkedHashMap<String, Unit>());
         accommodationStatus.put(Statuses.ACCOMMODATION_IDS, new ArrayList<String>());
@@ -63,6 +65,13 @@ public class ELoader {
         ePersist.save(accommodation);
     }
 
+    /**
+     * Load the right loader depending of the position in the file
+     * 
+     * @param elementName
+     * @param xmlr
+     * @throws XMLStreamException
+     */
     private void determinePosition(String elementName, XMLStreamReader xmlr) throws XMLStreamException {
         Loader loaderTmp = loaders.get(elementName);
         if(loaderTmp != null){
