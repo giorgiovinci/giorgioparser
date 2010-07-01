@@ -11,6 +11,7 @@ import javax.xml.stream.XMLStreamReader;
 import nl.elmar.model.Accommodation;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
+import nl.elmar.parser.loader.Statuses;
 import nl.elmar.persistence.EPersist;
 
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class TestELoader {
         elmarParser.loadAccommodation(xmlr);
        
         
-        Accommodation accommodation1 = elmarParser.accommodation;
+        Accommodation accommodation1 = (Accommodation) elmarParser.accommodationStatus.get(Statuses.ACCOMMODATION);
         assertEquals("ACADEBEA",accommodation1.getId());
         assertEquals("Beau-Site",accommodation1.getName());
         assertEquals("Zwitserland",accommodation1.getCountry());

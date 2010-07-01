@@ -30,4 +30,5 @@ public class EPersist {
         Query query = em.createQuery("select a from Accommodation a");
         return query.getResultList();
     }
+    
 }
