@@ -5,7 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+
 import nl.elmar.model.Accommodation;
+import nl.elmar.model.FacilityInfo;
 import nl.elmar.model.Price;
 import nl.elmar.model.Unit;
 import nl.elmar.persistence.EPersist;
@@ -32,7 +36,14 @@ public class TestEPersistence {
 	    List<Unit> listUnit = new ArrayList<Unit>();
 	    listUnit.add(unit);
 	    
+	    FacilityInfo facilityInfo = new FacilityInfo();
+	    facilityInfo.setDescription("facilityInfo");
+	    
+	    List<FacilityInfo> facilityInfos = new ArrayList<FacilityInfo>();
+	    facilityInfos.add(facilityInfo);
+	    
 	    unit.setPrices(listPrice);
+	    unit.setFacilityInfos(facilityInfos);
 	    
 	    Accommodation acc = new Accommodation();
 	    acc.setId("1");
@@ -55,7 +66,10 @@ public class TestEPersistence {
 	    Price p = unit.getPrices().get(0);
         assertEquals("100", p.getAmount());
         
-	    
+        FacilityInfo f = unit.getFacilityInfos().get(0);
+        assertEquals("facilityInfo", f.getDescription());
+        
+	    System.out.println(accommodations);
 	}
     
 }

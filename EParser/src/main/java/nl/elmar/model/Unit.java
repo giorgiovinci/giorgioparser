@@ -17,7 +17,10 @@ public class Unit {
 	private String description;
 	@OneToMany(cascade =  {CascadeType.ALL})
 	private List<Price> prices;
+	@OneToMany(cascade =  {CascadeType.ALL})
+	private List<FacilityInfo> facilityInfos;
 	
+
     public String getUuid() {
         return uuid;
     }
@@ -42,6 +45,12 @@ public class Unit {
 	public void setPrices(List<Price> prices) {
 		this.prices = prices;
 	}
+    public void setFacilityInfos(List<FacilityInfo> facilityInfos) {
+        this.facilityInfos = facilityInfos;
+    }
+    public List<FacilityInfo> getFacilityInfos() {
+        return facilityInfos;
+    }
 	
 	
 }

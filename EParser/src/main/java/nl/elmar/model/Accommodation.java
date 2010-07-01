@@ -14,6 +14,9 @@ public class Accommodation {
     private String uuid = UUID.randomUUID().toString();
 	private String id;
 	private String name;
+	private String place;
+	private String country;
+	
     @OneToMany(cascade =  {CascadeType.ALL})
 	private List<Unit> units;
 	
@@ -45,4 +48,16 @@ public class Accommodation {
 	public void setUnits(List<Unit> units) {
 		this.units = units;
 	}
+    public void setPlace(String place) {
+        this.place = place;
+    }
+    public String getPlace() {
+        return place;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public String getCountry() {
+        return country;
+    }
 }

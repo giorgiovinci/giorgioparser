@@ -42,8 +42,23 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-      <version>3.4.0.GA</version>
+      <version>${hibernate.version}</version>
     </dependency>
+	<dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>3.1.0.GA</version>
+    </dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>3.3.2.GA</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-search</artifactId>
+		<version>3.1.0.GA</version>
+	</dependency>
     <dependency>
 	  <groupId>hsqldb</groupId>
 	  <artifactId>hsqldb</artifactId>
@@ -56,6 +71,6 @@
 	</dependency>
   </dependencies>
   <properties>
-  		<spring.version>3.0.2.RELEASE</spring.version>
+  		<hibernate.version>3.4.0.GA</hibernate.version>
   </properties>
 </project>
