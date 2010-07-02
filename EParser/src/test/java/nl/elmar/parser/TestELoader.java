@@ -1,11 +1,9 @@
 package nl.elmar.parser;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 
 import java.util.List;
 
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import nl.elmar.model.Accommodation;
@@ -14,7 +12,6 @@ import nl.elmar.model.Unit;
 import nl.elmar.parser.loader.Statuses;
 import nl.elmar.persistence.EPersist;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class TestELoader {
