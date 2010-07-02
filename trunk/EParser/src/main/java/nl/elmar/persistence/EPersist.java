@@ -12,7 +12,7 @@ import nl.elmar.model.Accommodation;
 public class EPersist {
 
     
-    EntityManager em = null;
+    private EntityManager em = null;
     
     public EPersist(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("accomodationPersistance");

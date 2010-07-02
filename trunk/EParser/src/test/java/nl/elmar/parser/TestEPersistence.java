@@ -5,9 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-
 import nl.elmar.model.Accommodation;
 import nl.elmar.model.FacilityInfo;
 import nl.elmar.model.Price;
