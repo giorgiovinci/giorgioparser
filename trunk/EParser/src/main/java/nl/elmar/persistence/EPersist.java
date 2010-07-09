@@ -19,7 +19,7 @@ public class EPersist {
         em = emf.createEntityManager();    
     }
     
-    public void save(Accommodation accommodation){
+    public synchronized void save(Accommodation accommodation){
         em.getTransaction().begin();
         em.persist(accommodation);
         em.getTransaction().commit();

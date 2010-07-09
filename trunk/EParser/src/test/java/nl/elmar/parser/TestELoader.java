@@ -21,11 +21,10 @@ public class TestELoader {
     public void testLoadParsingAccommodation() throws Exception{
         
         String filename = "ABADE01.xml";
-        EParser eparser = new EParser();
-        ELoader elmarParser = new ELoader();
         
+        ELoader elmarParser = new ELoader();
        
-        XMLStreamReader xmlr = eparser.createXMLStreamReader(filename);
+        XMLStreamReader xmlr = EParser.createXMLStreamReader(filename);
         elmarParser.loadAccommodation(xmlr);
        
         

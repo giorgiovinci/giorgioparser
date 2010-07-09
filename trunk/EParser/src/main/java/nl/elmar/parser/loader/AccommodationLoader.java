@@ -17,7 +17,7 @@ public class AccommodationLoader implements Loader {
     
     @Override
     public void initialize(Map<Statuses, Object> accommodationStatus, XMLStreamReader xmlr) throws XMLStreamException{
-        String accommodationId = xmlr.getElementText();
+        String accommodationId = (String) accommodationStatus.get(Statuses.ACCOMMODATION_ID);;
         Accommodation accommodation = (Accommodation) accommodationStatus.get(Statuses.ACCOMMODATION);
         List<String> accommodationIds = (List<String>) accommodationStatus.get(Statuses.ACCOMMODATION_IDS);
         if(accommodation != null){
